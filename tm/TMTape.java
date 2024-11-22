@@ -55,7 +55,10 @@ public class TMTape {
             if (headPosition > 0) {
                 headPosition--;
             } else {
-                tape.add(0, 0); // Add blank symbol at the beginning
+                ArrayList<Integer> newList = new ArrayList<>();
+                newList.add(0);
+                newList.addAll(tape);
+                tape = newList;
             }
         }
     }

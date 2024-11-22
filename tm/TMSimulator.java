@@ -18,8 +18,7 @@ public class TMSimulator {
     public static void main(String[] args) {
         try {
             TM tm = createTMFromInput(args[0]);
-            TMInput tmInput = createTMInputFromFile(args[0]);
-            simulateTM(tm, tmInput);
+            tm.simulateTM();
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + args[0]);
             return;
@@ -35,6 +34,7 @@ public class TMSimulator {
      */
     private static TM createTMFromInput(String filePath) throws FileNotFoundException {
         Scanner file = new Scanner(new File(filePath));
+        TMInput input = new TMInput("0");
 
         int numStates = file.nextInt();
         int numSymbols = file.nextInt();
@@ -45,11 +45,15 @@ public class TMSimulator {
         while(file.hasNextLine()){
             currLine = file.nextLine();
             if(currLine.charAt(1) == ',') transitionList.add(currLine);
-            else break;
+            else{
+                input = new TMInput(currLine);
+                break;
+            }
         }
 
+
         file.close();
-        return new TM(numStates, numSymbols, transitionList);
+        return new TM(numStates, numSymbols, transitionList, input);
     }
 
     /**
@@ -64,8 +68,9 @@ public class TMSimulator {
         String input = "";
         while(file.hasNextLine()){
             String currLine = file.nextLine();
+            currLine+="  ";
             if (currLine.charAt(1) != ',') {
-                input = currLine;
+                input = currLine.substring(0,currLine.length()-2);
                 break;
             }
         }
@@ -73,31 +78,5 @@ public class TMSimulator {
         return new TMInput(input);
     }
 
-    /**
-     * Simulates the Turing Machine with the given input.
-     *
-     * @param tm the Turing Machine
-     * @param tmInput the input for the Turing Machine
-     */
-    private static void simulateTM(TM tm, TMInput tmInput) {
-        TMTape tape = new TMTape(tmInput.getInput());
-        TMConfiguration config = new TMConfiguration(tm.states.get(0), tape);
 
-        while (true) {
-            System.out.println(config);
-            TMState currentState = config.getCurrentState();
-            int currentSymbol = tape.read();
-            TMTransition transition = currentState.getTransition(currentSymbol);
-
-            if (transition == null) {
-                break;
-            }
-
-            tape.write(transition.writeSymb());
-            tape.moveHead(transition.moveRight());
-            config = new TMConfiguration(transition.toState(), tape);
-        }
-
-        System.out.println("Final Configuration: " + config);
-    }
 }
