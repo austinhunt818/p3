@@ -24,14 +24,14 @@ public class TM {
 
         for (int i = 0; i < numStates - 1; i++) {
             for (int j = 0; j <= numSymbols; j++) {
+                if (!iterator.hasNext()) break;
                 String currTransition = iterator.next();
+                String[] parts = currTransition.split(",");
+                int toState = Integer.parseInt(parts[0]);
+                int writeSymb = Integer.parseInt(parts[1]);
+                boolean moveRight = parts[2].equals("R");
 
-                states.get(i).addTransition(
-                        j,
-                        Integer.parseInt(currTransition.substring(2, 3)),
-                        currTransition.substring(4).equals("R"),
-                        states.get(Integer.parseInt(currTransition.substring(0, 1)))
-                );
+                states.get(i).addTransition(j, writeSymb, moveRight, states.get(toState));
             }
         }
     }
