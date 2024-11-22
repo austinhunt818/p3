@@ -29,11 +29,11 @@ public class TMSimulator {
         file.nextLine();
         while(file.hasNextLine()){
             currLine = file.nextLine();
-            if(currLine.charAt(1) == ',') transitionList.add(currLine);
+            if(currLine.length() > 1 && currLine.charAt(1) == ',') transitionList.add(currLine);
             else input = currLine;
         }
 
         file.close();
-        return new TM(numStates, numSymbols, transitionList);
+        return new TM(numStates, numSymbols, transitionList, input);
     }
 }

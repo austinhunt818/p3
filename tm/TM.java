@@ -3,9 +3,11 @@ package tm;
 import java.util.*;
 
 public class TM {
-    public HashMap<Integer, TMState> states = new HashMap<>();
+    private HashMap<Integer, TMState> states = new HashMap<>();
 
-    public TM(int numStates, int numSymbols, LinkedList<String> transitions){
+    private LinkedList<Character> tape = new LinkedList<>();
+
+    public TM(int numStates, int numSymbols, LinkedList<String> transitions, String input){
         for(int i = 0; i < numStates; i++){
             states.put(i, new TMState(""+i));
         }
@@ -24,6 +26,13 @@ public class TM {
                 );
             }
         }
+
+        for(char c : input.toCharArray()){
+            tape.add(c);
+        }
+
+        System.out.println(tape);
+
     }
 
 
