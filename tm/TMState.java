@@ -3,6 +3,7 @@ package tm;
 import java.util.HashMap;
 
 /**
+ * @author Austin Hunt
  * The TMState class represents a state in a Turing Machine.
  */
 public class TMState extends State {

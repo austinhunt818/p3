@@ -1,6 +1,7 @@
 package tm;
 
 /**
+ * @author Carson Magee
  * The TMConfiguration class represents the configuration of a Turing Machine at a given point in time.
  */
 public class TMConfiguration {

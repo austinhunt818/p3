@@ -3,15 +3,13 @@ package tm;
 import java.util.*;
 
 /**
+ * @author Austin Hunt
+ * @author Carson Magee
  * The TM class represents a Turing Machine.
  */
 public class TM {
     private HashMap<Integer, TMState> states = new HashMap<>();
-    private TMInput tmInput;
-
-    public TMInput getTmInput() {
-        return tmInput;
-    }
+    private String tmInput;
 
     /**
      * Constructs a Turing Machine with the specified number of states and symbols, and initializes it with the given transitions.
@@ -20,7 +18,7 @@ public class TM {
      * @param numSymbols  the number of symbols in the Turing Machine's alphabet
      * @param transitions a LinkedList of strings representing the transitions
      */
-    public TM(int numStates, int numSymbols, LinkedList<String> transitions, TMInput tmInput) {
+    public TM(int numStates, int numSymbols, LinkedList<String> transitions, String tmInput) {
         this.tmInput = tmInput;
 
         for (int i = 0; i < numStates; i++) {
@@ -46,13 +44,12 @@ public class TM {
     /**
      * Simulates the Turing Machine with the given input.
      */
-    public void simulateTM() {
-        TMTape tape = new TMTape(tmInput.getInput());
+    public TMTape simulateTM() {
+        TMTape tape = new TMTape(tmInput);
         TMConfiguration config = new TMConfiguration(states.get(0), tape);
 
-        Long start = System.currentTimeMillis();
+//        double start = System.currentTimeMillis();
         while (true) {
-//            System.out.println(config);
             TMState currentState = config.getCurrentState();
             int currentSymbol = tape.read();
             TMTransition transition = currentState.getTransition(currentSymbol);
@@ -66,7 +63,8 @@ public class TM {
             config = new TMConfiguration(transition.toState(), tape);
         }
 
-        System.out.println("Final Configuration: " + config);
-        System.out.println("Time elapsed: " + (double)(System.currentTimeMillis()-start)/1000 + " seconds");
+        return tape;
+//        System.out.println("Final Configuration: " + config);
+//        System.out.println("Time elapsed: " + (System.currentTimeMillis()-start)/1000 + " seconds");
     }
 }

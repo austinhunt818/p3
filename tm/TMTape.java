@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * @author Carson Magee
+ * @author Austin Hunt
  * The TMTape class represents the tape of a Turing Machine.
  */
 public class TMTape {

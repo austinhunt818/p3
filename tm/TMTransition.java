@@ -1,6 +1,7 @@
 package tm;
 
 /**
+ * @author Austin Hunt
  * The TMTransition class represents a transition in a Turing Machine.
  *
  * @param onSymb   the symbol on which the transition occurs

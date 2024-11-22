@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
+ * @author Austin Hunt
  * The TMSimulator class simulates the execution of a Turing Machine.
  */
 public class TMSimulator {
@@ -18,10 +19,9 @@ public class TMSimulator {
     public static void main(String[] args) {
         try {
             TM tm = createTMFromInput(args[0]);
-            tm.simulateTM();
+            System.out.println(tm.simulateTM());
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + args[0]);
-            return;
         }
     }
 
@@ -34,7 +34,7 @@ public class TMSimulator {
      */
     private static TM createTMFromInput(String filePath) throws FileNotFoundException {
         Scanner file = new Scanner(new File(filePath));
-        TMInput input = new TMInput("0");
+        String input = "0";
 
         int numStates = file.nextInt();
         int numSymbols = file.nextInt();
@@ -46,7 +46,7 @@ public class TMSimulator {
             currLine = file.nextLine();
             if(currLine.charAt(1) == ',') transitionList.add(currLine);
             else{
-                input = new TMInput(currLine);
+                input = currLine;
                 break;
             }
         }
@@ -54,28 +54,6 @@ public class TMSimulator {
 
         file.close();
         return new TM(numStates, numSymbols, transitionList, input);
-    }
-
-    /**
-     * Creates a TMInput from the input file.
-     *
-     * @param filePath the path to the input file
-     * @return the TMInput
-     * @throws FileNotFoundException if the file is not found
-     */
-    private static TMInput createTMInputFromFile(String filePath) throws FileNotFoundException {
-        Scanner file = new Scanner(new File(filePath));
-        String input = "";
-        while(file.hasNextLine()){
-            String currLine = file.nextLine();
-            currLine+="  ";
-            if (currLine.charAt(1) != ',') {
-                input = currLine.substring(0,currLine.length()-2);
-                break;
-            }
-        }
-        file.close();
-        return new TMInput(input);
     }
 
 
