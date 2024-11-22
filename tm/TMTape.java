@@ -1,12 +1,13 @@
 package tm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The TMTape class represents the tape of a Turing Machine.
  */
 public class TMTape {
-    private ArrayList<Integer> tape;
+    private HashMap<Integer, Integer> tape;
     private int headPosition;
 
     /**
@@ -15,9 +16,11 @@ public class TMTape {
      * @param input the input string for the Turing Machine
      */
     public TMTape(String input) {
-        tape = new ArrayList<>();
+        tape = new HashMap<>();
+        headPosition = 0;
         for (char c : input.toCharArray()) {
-            tape.add(Character.getNumericValue(c));
+            if(c != '0') tape.put(headPosition, Character.getNumericValue(c));
+            headPosition++;
         }
         headPosition = 0;
     }
@@ -28,7 +31,7 @@ public class TMTape {
      * @return the symbol at the current head position
      */
     public int read() {
-        return tape.get(headPosition);
+        return tape.getOrDefault(headPosition, 0);
     }
 
     /**
@@ -37,7 +40,8 @@ public class TMTape {
      * @param symbol the symbol to write
      */
     public void write(int symbol) {
-        tape.set(headPosition, symbol);
+        if(symbol == 0) tape.remove(headPosition);
+        else tape.put(headPosition, symbol);
     }
 
     /**
@@ -48,18 +52,8 @@ public class TMTape {
     public void moveHead(boolean right) {
         if (right) {
             headPosition++;
-            if (headPosition == tape.size()) {
-                tape.add(0); // Assuming blank symbol is 0
-            }
         } else {
-            if (headPosition > 0) {
-                headPosition--;
-            } else {
-                ArrayList<Integer> newList = new ArrayList<>();
-                newList.add(0);
-                newList.addAll(tape);
-                tape = newList;
-            }
+            headPosition--;
         }
     }
 
@@ -70,14 +64,12 @@ public class TMTape {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tape.size(); i++) {
-            if (i == headPosition) {
-                sb.append("[").append(tape.get(i)).append("]");
-            } else {
-                sb.append(tape.get(i));
-            }
+        int min = tape.keySet().stream().min(Integer::compare).orElse(0);
+        int max = tape.keySet().stream().max(Integer::compare).orElse(0);
+        StringBuilder builder = new StringBuilder();
+        for (int i = min; i <= max; i++) {
+            builder.append(tape.getOrDefault(i, 0));
         }
-        return sb.toString();
+        return builder.toString();
     }
 }

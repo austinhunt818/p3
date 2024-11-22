@@ -50,8 +50,9 @@ public class TM {
         TMTape tape = new TMTape(tmInput.getInput());
         TMConfiguration config = new TMConfiguration(states.get(0), tape);
 
+        Long start = System.currentTimeMillis();
         while (true) {
-            System.out.println(config);
+//            System.out.println(config);
             TMState currentState = config.getCurrentState();
             int currentSymbol = tape.read();
             TMTransition transition = currentState.getTransition(currentSymbol);
@@ -66,5 +67,6 @@ public class TM {
         }
 
         System.out.println("Final Configuration: " + config);
+        System.out.println("Time elapsed: " + (double)(System.currentTimeMillis()-start)/1000 + " seconds");
     }
 }
