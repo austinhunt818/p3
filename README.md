@@ -19,7 +19,7 @@ to make the program run faster. I knew that hashmaps are ideal for reading and w
 worked pretty well.
 
 ### Carson
-
+At first I found it difficult to grasp the depth of this assigment, even though everything was layed out clearly. One significant issue we encountered was an out of bounds error due to a mistake I made in the logic, but it was easily fixed with a single line of code, like how most CS projects go. The first part the simulator went fairly smooth, but it took a bit of testing to get right, especially since the first iteration was quite horrendously slow. Overall, this project turned out in the end and I'm proud of how much Austin and I were able to implement.
 
 ## Compiling and Using
 
