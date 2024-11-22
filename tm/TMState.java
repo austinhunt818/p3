@@ -14,6 +14,10 @@ public class TMState extends State{
         return super.getName();
     }
 
+    public TMTransition getTransition(int symb){
+        return transitions.get(symb);
+    }
+
     @Override
     public String toString() {
         return super.toString();

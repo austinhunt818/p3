@@ -11,6 +11,7 @@ public class TMSimulator {
     public static void main(String[] args) {
         try {
             TM tm = createTMFromInput(args[0]);
+            System.out.println((tm.fullSimulate()?"Halt and Accept" : "Reject"));
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + args[0]);
             return;
